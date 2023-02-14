@@ -3,10 +3,6 @@ import { useState } from "react"
 const Clicker = (props) => {
     let [clicks, setTime] = useState(0);
 
-
-    let dangerClicks = clicks > 20
-    let serious = clicks > 30
-
     const decreaseButton = () => {
         setTime(oldCount => oldCount - 1)
     }
