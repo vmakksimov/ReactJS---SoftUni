@@ -5,6 +5,7 @@ import Timer from './components/Timer';
 import Handler from './components/Handler';
 import Clicker from './components/Clicker';
 import { BookList } from './components/BookList';
+import CharacterList from './components/CharacterList';
 
 function App() {
     const books = [
@@ -23,6 +24,7 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
+                <CharacterList></CharacterList>
                 <BookList books={books}></BookList>
                 <Clicker></Clicker>
                 <Handler />
