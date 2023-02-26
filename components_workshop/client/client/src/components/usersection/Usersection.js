@@ -38,35 +38,20 @@ export const Usersection = () => {
 
     }
 
+    const createUserOpenHandler = () => {
+        setUserAction({ user: null, action: UserActions.add});
+    }
+
 
     const detailsCloseHandler = () => {
         console.log('close')
         setUserAction({ user: null, action: null });
     }
 
-    const userCreateHanlder = (e) => {
-        e.preventDefault();
+   
 
-        const formData = new FormData(e.target);
-        const {
-            firstName,
-            lastName,
-            email,
-            imageUrl,
-            phoneNumber,
-            ...address
-        } = Object.fromEntries(formData);
-        const userData = {
-            firstName,
-            lastName,
-            email,
-            imageUrl,
-            phoneNumber,
-            address,
-        }
-
-        console.log(userData)
-
+    const userCreateHanlder = (userData) => {
+        
         userService.create(userData)
             .then(user => {
                 console.log(user)
@@ -150,7 +135,7 @@ export const Usersection = () => {
                 </table>
 
             </div>
-            <button className="btn-add btn" onClick={() => userActionClickHandler(null, 'add')} >Add new user</button>
+            <button className="btn-add btn" onClick={() => createUserOpenHandler(null, 'add')} >Add new user</button>
         </>
     )
 }

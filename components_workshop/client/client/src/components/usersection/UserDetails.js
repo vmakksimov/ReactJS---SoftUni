@@ -21,7 +21,7 @@ export const UserDetails = ({
                     </header>
                     <div className="content">
                         <div className="image-container">
-                            <img src={user.imageUrl} alt=""
+                            <img src={user.imageUrl} alt="Viktor image"
                                 className="image" />
                         </div>
                         <div className="user-details">
