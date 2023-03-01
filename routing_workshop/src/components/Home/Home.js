@@ -1,14 +1,11 @@
-import {useState, useEffect} from 'react'
-import * as gameService from '../../services/gameService'
 
-export const Home = () => {
+import { GamesList } from './GamesList/GamesList'
 
-    const [games, setGames] = useState({})
+export const Home = ({
+    games
+}) => {
 
-    useEffect(() => {
-        gameService.getAll()
-            .then(result => setGames(result))
-    }, [])
+    
 
     return (
         <section id="welcome-world">
@@ -20,62 +17,12 @@ export const Home = () => {
                 <div id="home-page">
                     <h1>Latest Games</h1>
                     {/* Display div: with information about every game (if any) */}
-                    <div className="game">
-                        <div className="image-wrap">
-                            <img src={games[0].imageUrl} alt='No Image' />
-                        </div>
-                        <h3>{games[0].title}</h3>
-                        <div className="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                        </div>
-                        <div className="data-buttons">
-                            <a href="#" className="btn details-btn">
-                                Details
-                            </a>
-                        </div>
-                    </div>
-                    <div className="game">
-                        <div className="image-wrap">
-                            <img src="./images/ZombieLang.png" />
-                        </div>
-                        <h3>Zombie Lang</h3>
-                        <div className="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                        </div>
-                        <div className="data-buttons">
-                            <a href="#" className="btn details-btn">
-                                Details
-                            </a>
-                        </div>
-                    </div>
-                    <div className="game">
-                        <div className="image-wrap">
-                            <img src="./images/MineCraft.png" />
-                        </div>
-                        <h3>MineCraft</h3>
-                        <div className="rating">
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                            <span>☆</span>
-                        </div>
-                        <div className="data-buttons">
-                            <a href="#" className="btn details-btn">
-                                Details
-                            </a>
-                        </div>
-                    </div>
-                    {/* Display paragraph: If there is no games  */}
-                    <p className="no-articles">No games yet</p>
+                   
+                    {games.length > 0
+                    ? games.map(x => <GamesList key={x._id} game={x}/>)
+                   
+                    : <p className="no-articles">No games yet</p>
+                    }
                 </div>
             </section>
     )

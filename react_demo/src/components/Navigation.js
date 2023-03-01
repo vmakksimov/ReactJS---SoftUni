@@ -7,6 +7,7 @@ const Navigation = () => {
                 <li><NavLink to='/' style={({isActive}) => ({
                     background: isActive ? 'lightblue' : 'red'
                 })}>Home</NavLink></li>
+                
                 <li><NavLink to='/about'>About</NavLink></li>
 
 
