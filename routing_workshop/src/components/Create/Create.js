@@ -1,7 +1,18 @@
-export const Create = () => {
+
+export const Create = ({AddGameHandler}) => {
+    const OnSubmit = (e) => {
+        e.preventDefault()
+        const GameData = Object.fromEntries(new FormData(e.target))
+       
+
+        AddGameHandler(GameData)
+       
+    }
+
+
     return (
         <section id="create-page" className="auth">
-        <form id="create">
+        <form id="create" onSubmit={OnSubmit}>
             <div className="container">
                 <h1>Create Game</h1>
                 <label htmlFor="leg-title">Legendary title:</label>

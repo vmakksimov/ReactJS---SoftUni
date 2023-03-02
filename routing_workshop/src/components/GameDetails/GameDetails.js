@@ -9,6 +9,10 @@ export const GameDetails = ({ games, addComment }) => {
         comment: ''
     });
 
+    const [errors, setError] = useState({
+        message: ''
+    })
+
     const game = games.find(x => x._id == gameId);
 
     const addCommentHandler = (e) => {
@@ -24,6 +28,26 @@ export const GameDetails = ({ games, addComment }) => {
         }
 
         ))
+    }
+
+    const onBlur = (e) => {
+        const text = e.target.value
+        let errormessage = ''
+
+        if (text.length < 2){
+            errormessage = 'The symbols must be minimum 2'
+            
+        }else if (text.length > 10){
+            errormessage = 'The symbols must be maximum 10'
+        }
+
+        setError(state => ({
+            ...state,
+            message: errormessage
+           
+        }))
+
+   
     }
 
     return (
@@ -74,12 +98,17 @@ export const GameDetails = ({ games, addComment }) => {
                 <form className="form" onSubmit={addCommentHandler}>
                     <textarea
                         name="comment"
-                        placeholder="Comment......"
+
+                        placeholder='Comment...'
+                        onBlur={onBlur}
                         onChange={onChange}
                         value={comment.comment}
 
-
                     />
+
+                    {errors.message &&
+                    <div style={{color: 'red'}}>{errors.message}</div>}
+
                     <input
                         className="btn submit"
                         type="submit"
