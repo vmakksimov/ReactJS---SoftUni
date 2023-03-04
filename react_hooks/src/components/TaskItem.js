@@ -1,4 +1,8 @@
-export const TaskItem = ({item, removeHandler, taskId}) => {
+import {useContext} from 'react';
+import { TaskContext } from '../contexts/TaskContexts';
+
+export const TaskItem = ({item, taskId}) => {
+    const { removeHandler } = useContext(TaskContext);
     return (
         <li>
             {item}

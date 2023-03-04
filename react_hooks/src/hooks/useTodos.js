@@ -9,7 +9,16 @@ export const useTodos = () => {
         return await res.json()
     }
 
+    const createTodo = async (title) => {
+        const res = await fetch(baseUrl, {
+            method: 'POST',
+            body: JSON.stringify({title})
+        })
+        return await res.json()
+    }
+
     return {
-        removeTodo: removeTodo
+        removeTodo: removeTodo,
+        createTodo: createTodo
     }
 }
