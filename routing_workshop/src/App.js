@@ -2,6 +2,7 @@
 import './App.css';
 import {useState, useEffect} from 'react'
 import * as GameService from './services/gameService'
+import { AuthContext } from './contexts/AuthContext';
 import { Header } from './components/Header/Header';
 import { Home } from './components/Home/Home';
 import { Routes, Route, useNavigate} from 'react-router-dom';
@@ -11,13 +12,20 @@ import { Create } from './components/Create/Create';
 import { EditPage } from './components/EditPage/EditPage';
 import { Catalog } from './components/Calatog/Catalog';
 import { GameDetails } from './components/GameDetails/GameDetails';
+import { Error404 } from './components/404/Error404';
 import uniqid from 'uniqid'
 
 function App() {
 
 
     const [games, setGames] = useState({})
+    const [auth, setAuth] = useState({})
+
     const navigate = useNavigate()
+
+    const userLogin = (authData) => {
+        setAuth(authData)
+    }
 
     const addComment = (gameId, comment) => {
         setGames(state => {
@@ -54,6 +62,7 @@ function App() {
     console.log(games)
 
     return (
+        <AuthContext.Provider value={{user: auth, userLogin}}>
         <div id="box">
             <Header />
             {/* Main Content */}
@@ -66,10 +75,12 @@ function App() {
                     <Route path='/edit' element={<EditPage />} />
                     <Route path='/catalog' element={<Catalog games={games} />} />
                     <Route path='/catalog/:gameId' element={<GameDetails games={games} addComment={addComment}/>} />
+                    <Route path='/404' element={<Error404 />} />
                 </Routes>
             </main>
 
         </div>
+        </AuthContext.Provider>
 
     );
 }
