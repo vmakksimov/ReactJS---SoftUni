@@ -13,6 +13,7 @@ import { EditPage } from './components/EditPage/EditPage';
 import { Catalog } from './components/Calatog/Catalog';
 import { GameDetails } from './components/GameDetails/GameDetails';
 import { Error404 } from './components/404/Error404';
+import { Logout } from './components/Logout/Logout';
 import uniqid from 'uniqid'
 
 function App() {
@@ -25,6 +26,10 @@ function App() {
 
     const userLogin = (authData) => {
         setAuth(authData)
+    }
+
+    const userLogout = () => {
+        setAuth({})
     }
 
     const addComment = (gameId, comment) => {
@@ -62,7 +67,7 @@ function App() {
     console.log(games)
 
     return (
-        <AuthContext.Provider value={{user: auth, userLogin}}>
+        <AuthContext.Provider value={{user: auth, userLogin, userLogout}}>
         <div id="box">
             <Header />
             {/* Main Content */}
@@ -70,6 +75,7 @@ function App() {
                 <Routes>
                     <Route path='/' element={<Home games={games} />} />
                     <Route path='/login' element={<Login />} />
+                    <Route path='/logout' element={<Logout />} />
                     <Route path='/register' element={<Register />} />
                     <Route path='/create' element={<Create AddGameHandler={AddGameHandler} />} />
                     <Route path='/edit' element={<EditPage />} />
