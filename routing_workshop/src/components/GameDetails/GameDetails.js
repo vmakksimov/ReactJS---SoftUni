@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom"
 import { useState } from 'react'
+import { Link } from "react-router-dom";
 
 export const GameDetails = ({ games, addComment }) => {
 
-    const { gameId } = useParams();
+    const params = useParams();
 
     const [comment, setComment] = useState({
         comment: ''
@@ -13,12 +14,13 @@ export const GameDetails = ({ games, addComment }) => {
         message: ''
     })
 
-    const game = games.find(x => x._id == gameId);
+    const game = games.find(x => x._id == params.gameId);
+
 
     const addCommentHandler = (e) => {
         e.preventDefault()
 
-        addComment(gameId, `${comment.comment}`)
+        addComment(params.gameId, `${comment.comment}`)
     }
 
     const onChange = (e) => {
@@ -47,7 +49,7 @@ export const GameDetails = ({ games, addComment }) => {
            
         }))
 
-   
+
     }
 
     return (
@@ -57,11 +59,11 @@ export const GameDetails = ({ games, addComment }) => {
                 <div className="game-header">
                     <img className="game-img" src={game.imageUrl} />
                     <h1>{game.title}</h1>
-                    <span className="levels">MaxLevel: az</span>
-                    <p className="type">az</p>
+                    <span className="levels">MaxLevel: {game.maxLevel}</span>
+                    <p className="type">{game.category}</p>
                 </div>
                 <p className="text">
-                    az
+                    {game.summary}
                 </p>
                 {/* Bonus ( for Guests and Users ) */}
                 <div className="details-comments">
@@ -82,10 +84,13 @@ export const GameDetails = ({ games, addComment }) => {
                   
                 </div>
                 {/* Edit/Delete buttons ( Only for creator of this game )  */}
+                
                 <div className="buttons">
-                    <a href="#" className="button">
+                    
+                    
+                    <Link to={`/catalog/edit/${params.gameId}`} className="button">
                         Edit
-                    </a>
+                    </Link>
                     <a href="#" className="button">
                         Delete
                     </a>
