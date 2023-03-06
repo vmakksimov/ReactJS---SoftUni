@@ -14,13 +14,14 @@ import { Catalog } from './components/Calatog/Catalog';
 import { GameDetails } from './components/GameDetails/GameDetails';
 import { Error404 } from './components/404/Error404';
 import { Logout } from './components/Logout/Logout';
+import { useLocalStorage } from './hooks/useLocalStorage';
 import uniqid from 'uniqid'
 
 function App() {
 
 
     const [games, setGames] = useState({})
-    const [auth, setAuth] = useState({})
+    const [auth, setAuth] = useLocalStorage('key', {})
 
     const navigate = useNavigate()
 
@@ -64,7 +65,7 @@ function App() {
             .then(result => setGames(result))
     }, [])
 
-    console.log(games)
+    
 
     return (
         <AuthContext.Provider value={{user: auth, userLogin, userLogout}}>
