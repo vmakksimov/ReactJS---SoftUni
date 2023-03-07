@@ -58,6 +58,10 @@ function App() {
         navigate('/catalog')
     }
 
+    const gameEdit = (gameId, gameData) => {
+        setGames(state => state.map(x => x._id === gameId ? gameData : x))
+    }
+
     useEffect(() => {
         GameService.getAll()
             .then(result => setGames(result))
@@ -70,7 +74,7 @@ function App() {
         <div id="box">
             <Header />
             {/* Main Content */}
-            <GameContext.Provider value={{games, AddGameHandler}}>
+            <GameContext.Provider value={{games, AddGameHandler, gameEdit}}>
             <main id="main-content">
                 <Routes>
                     <Route path='/' element={<Home games={games} />} />
