@@ -9,4 +9,6 @@ export const create = (gameData) => request.post(baseUrl, gameData);
 export const getOne = (gameId) => request.get(`${baseUrl}/${gameId}`)
 
 export const edit = (gameId, gameData) => request.put(`${baseUrl}/${gameId}`, gameData)
+
+export const remove = (gameId) => request.del(`${baseUrl}/${gameId}`)
        
