@@ -17,6 +17,8 @@ import { Error404 } from './components/404/Error404';
 import { Logout } from './components/Logout/Logout';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { PrivateRoute } from './components/common/PrivateRoute';
+import { PrivateGuard } from './components/common/PrivateGuard';
+import { GameOwner } from './components/common/PrivateId';
 import uniqid from 'uniqid';
 
 function App() {
@@ -35,11 +37,14 @@ function App() {
         setAuth({})
     }
 
+    const selectGame = (gameId) => {
+        return games.find(x => x._id === gameId) || {}
+    }
+
     const addComment = (gameId, comment) => {
         setGames(state => {
 
             const game = state.find(x => x._id == gameId);
-            console.log(game.comments)
             const comments = game.comments || [];
 
             comments.push(comment)
@@ -78,20 +83,28 @@ function App() {
             <div id="box">
                 <Header />
                 {/* Main Content */}
-                <GameContext.Provider value={{ games, AddGameHandler, gameEdit }}>
+                <GameContext.Provider value={{ games, AddGameHandler, gameEdit, selectGame }}>
                     <main id="main-content">
                         <Routes>
                             <Route path='/' element={<Home games={games} />} />
                             <Route path='/login' element={<Login />} />
                             <Route path='/logout' element={<Logout />} />
-                            <Route path='/register' element={<Register />} />
+
                             <Route path='/create' element={(
                                 <PrivateRoute>
                                     <Create />
                                 </PrivateRoute>
 
                             )} />
-                            <Route path='/catalog/edit/:gameId' element={<EditPage />} />
+                            <Route element={<PrivateGuard />}>
+                                <Route path='/register' element={<Register />} />
+                            </Route>
+
+                            <Route element={<GameOwner />}>
+                                <Route path='/catalog/edit/:gameId' element={<EditPage />} />
+                            </Route>
+
+
                             <Route path='/catalog' element={<Catalog games={games} />} />
                             <Route path='/catalog/:gameId' element={<GameDetails games={games} addComment={addComment} />} />
                             <Route path='/404' element={<Error404 />} />

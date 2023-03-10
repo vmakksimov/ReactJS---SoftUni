@@ -3,10 +3,12 @@ import { useState, useEffect, useContext } from 'react'
 import { Link } from "react-router-dom";
 import * as gameService from '../../services/gameService'
 import { AuthContext } from "../../contexts/AuthContext";
+import { GameContext } from "../../contexts/GameContext";
 
-export const GameDetails = ({ addComment }) => {
+export const GameDetails = ({addComment}) => {
 
     const { user } = useContext(AuthContext)
+    // const {addComment} = useContext(GameContext)
 
     const navigate = useNavigate();
 
@@ -15,7 +17,8 @@ export const GameDetails = ({ addComment }) => {
     const [currentGame, setCurrentGame] = useState({});
 
     const [comment, setComment] = useState({
-        comment: ''
+        comment: '',
+        gameId: ''
     });
 
     const [errors, setError] = useState({
@@ -37,12 +40,22 @@ export const GameDetails = ({ addComment }) => {
 
     const addCommentHandler = (e) => {
         e.preventDefault()
+
+        const gameData = Object.fromEntries(new FormData(e.target))
+
+        gameData['_id'] = gameId
+
+        console.log(gameData)
         
         addComment(gameId, `${comment.comment}`)
+        gameService.comment({gameId, comment})
+            .then(res => {
+                console.log(res)
+            })
     }
 
     const onChange = (e) => {
-        
+
         setComment(state => ({
             ...state,
             [e.target.name]: e.target.value

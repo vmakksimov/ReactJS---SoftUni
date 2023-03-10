@@ -11,4 +11,6 @@ export const getOne = (gameId) => request.get(`${baseUrl}/${gameId}`)
 export const edit = (gameId, gameData) => request.put(`${baseUrl}/${gameId}`, gameData)
 
 export const remove = (gameId) => request.del(`${baseUrl}/${gameId}`)
+
+export const comment = (gameId, comment) => request.put(`http://localhost:3030/data/comments/${gameId}`, comment)
        

@@ -18,7 +18,6 @@ export const EditPage = () => {
     useEffect(() => {
         gameService.getOne(gameId)
             .then(gameData => {
-                console.log(gameData)
                 setGame(gameData)
             })
 
